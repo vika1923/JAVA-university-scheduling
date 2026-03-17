@@ -17,5 +17,22 @@ public class Main {
 
     manager.removeEvent(event1);
     System.out.println("After remove, events count: " + manager.getEvents().size());
+
+
+   StudentManagement sm = new StudentManagement();
+
+        sm.addStudent(new Student(1, "Khondamir", "Software Engineering"));
+        sm.addStudent(new Student(2, "Bahodir", "Artificial Intelligence"));
+
+        sm.listStudents();
+
+        sm.updateStudent(1, "Viktoriya", "Cyber Security");
+
+        sm.findStudent("Cyber");
+
+        sm.removeStudent(2);
+
+        System.out.println("After remove:");
+        sm.listStudents();
   }
 }
