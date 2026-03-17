@@ -34,5 +34,28 @@ public class Main {
 
         System.out.println("After remove:");
         sm.listStudents();
+
+    // Instructor Management demo
+    System.out.println("\n--- Instructor Management ---");
+    InstructorManagement im = new InstructorManagement();
+
+    im.addInstructor(new Instructor(101, "Dr. Shirin Noekhah", "Introduction to Data Structures and Algorithm Design and Analysis of Data Structure & Algorithm"));
+    im.addInstructor(new Instructor(102, "Ms. Ellie Scheaffer", "English Composition"));
+
+    System.out.println("All instructors:");
+    im.listInstructors();
+
+    im.updateInstructor(101, "Dr. Shirin Noekhah", "Introduction to Data Structures and Algorithm Design and Analysis of Data Structure & Algorithm");
+
+    System.out.println("\nFind by name 'Scheaffer':");
+    im.findInstructor("Scheaffer");
+    System.out.println("\nFind by department 'English Composition':");
+    im.findInstructor("English Composition");
+    System.out.println("\nFind by employee ID '102':");
+    im.findInstructor("102");
+
+    im.removeInstructor(102);
+    System.out.println("\nAfter remove, all instructors:");
+    im.listInstructors();
   }
 }
