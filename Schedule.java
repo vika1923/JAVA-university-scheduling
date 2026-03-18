@@ -1,4 +1,4 @@
-class Schedule extends Booking {
+class Schedule extends Booking implements GetItems, SetItems {
     private String course;
     private String instructor;
     private int classroom;
