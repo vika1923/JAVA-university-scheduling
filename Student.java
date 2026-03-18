@@ -1,4 +1,4 @@
-public class Student {
+public class Student implements Person {
 
     private int id;
     private String name;
@@ -28,6 +28,11 @@ public class Student {
 
     public void setMajor(String major) {
         this.major = major;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Student: " + name + " | Major: " + major;
     }
 
     @Override

@@ -1,20 +1,20 @@
-public class Event {
-    private String name;
+public class Event extends Booking {
     private String date;
     private String location;
     private String organizer;
     private int attendees;
 
     public Event(String name, String date, String location, String organizer, int attendees) {
-        this.name = name;
+        super(name);
         this.date = date;
         this.location = location;
         this.organizer = organizer;
         this.attendees = attendees;
     }
 
+    @Override
     public String getName() {
-        return name;
+        return "Booking name is: " + name;
     }
 
     public String getDate() {

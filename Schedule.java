@@ -1,10 +1,11 @@
-class Schedule {
+class Schedule extends Booking {
     private String course;
     private String instructor;
     private int classroom;
     private String time;
     
     public Schedule(String course, String instructor, int classroom, String time) {
+        super(course);
         this.course = course;
         this.instructor = instructor;
         this.classroom = classroom;
@@ -22,4 +23,9 @@ class Schedule {
 
     public String getTime() { return time; }
     public void setTime(String time) { this.time = time; }
+
+    @Override
+    public String getName() {
+        return "Booking name is: " + course;
+    }
 }

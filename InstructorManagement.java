@@ -13,13 +13,28 @@ public class InstructorManagement {
     public void updateInstructor(int employeeId, String newName, String newDepartment) {
         for (Instructor i : instructors) {
             if (i.getEmployeeId() == employeeId) {
-                i.setName(newName);
-                i.setDepartment(newDepartment);
+                if (newName != null && !newName.isBlank()) {
+                    i.setName(newName);
+                }
+                if (newDepartment != null && !newDepartment.isBlank()) {
+                    i.setDepartment(newDepartment);
+                }
+
+                Person p = i;
+                System.out.println(p.getDescription());
                 System.out.println("Instructor updated");
                 return;
             }
         }
         System.out.println("Instructor not found");
+    }
+
+    public void updateInstructor(int employeeId, String newName) {
+        updateInstructor(employeeId, newName, null);
+    }
+
+    public void updateInstructor(int employeeId) {
+        updateInstructor(employeeId, null, null);
     }
 
 

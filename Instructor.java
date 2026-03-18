@@ -1,4 +1,4 @@
-public class Instructor {
+public class Instructor implements Person {
 
     private int employeeId;
     private String name;
@@ -8,6 +8,11 @@ public class Instructor {
         this.employeeId = employeeId;
         this.name = name;
         this.department = department;
+    }
+
+    @Override
+    public int getId() {
+        return employeeId;
     }
 
     public int getEmployeeId() {
@@ -32,6 +37,11 @@ public class Instructor {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Instructor: " + name + " | Department: " + department;
     }
 
     @Override
