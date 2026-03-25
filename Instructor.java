@@ -44,7 +44,6 @@ public class Instructor implements Person {
         return "Instructor: " + name + " | Department: " + department;
     }
 
-    @Override
     public String toString() {
         return employeeId + " | " + name + " | " + department;
     }

@@ -35,7 +35,6 @@ public class Student implements Person {
         return "Student: " + name + " | Major: " + major;
     }
 
-    @Override
     public String toString() {
         return id + " | " + name + " | " + major;
     }

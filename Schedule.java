@@ -26,6 +26,6 @@ class Schedule extends Booking implements GetItems, SetItems {
 
     @Override
     public String getName() {
-        return "Booking name is: " + course;
+        return "Shedule name is: " + course;
     }
 }

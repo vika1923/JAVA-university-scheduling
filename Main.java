@@ -1,102 +1,329 @@
+import java.util.Scanner;
+
 public class Main {
-  public static void main(String[] args) {
-    // -------------------- Events (Event + EventManager) --------------------
-    EventManager manager = new EventManager();
+    private static EventManager eventManager = new EventManager();
+    private static ScheduleManagement scheduleManagement = new ScheduleManagement();
+    private static StudentManagement studentManagement = new StudentManagement();
+    private static InstructorManagement instructorManagement = new InstructorManagement();
+    private static Scanner scanner = new Scanner(System.in);
 
-    Event event1 = new Event("Java Workshop", "2025-02-10", "Room 101", "CS Dept", 30);
-    Event event2 = new Event("Career Fair", "2025-02-15", "Main Hall", "Career Center", 200);
+    public static void main(String[] args) {
+        boolean running = true;
+        while (running) {
+            System.out.println("\n--- University Scheduling System ---");
+            System.out.println("1. Event Management");
+            System.out.println("2. Schedule Management");
+            System.out.println("3. Student Management");
+            System.out.println("4. Instructor Management");
+            System.out.println("5. Exit");
+            System.out.print("Select an option: ");
 
-    manager.addEvent(event1);
-    manager.addEvent(event2);
+            String choice = scanner.nextLine();
 
-    System.out.println("Events count: " + manager.getEvents().size());
-
-    Event found = manager.getEventByName("Java Workshop");
-    if (found != null) {
-      System.out.println("Found: " + found.getName() + " at " + found.getLocation() + ", " + found.getAttendees() + " attendees");
+            switch (choice) {
+                case "1":
+                    eventMenu();
+                    break;
+                case "2":
+                    scheduleMenu();
+                    break;
+                case "3":
+                    studentMenu();
+                    break;
+                case "4":
+                    instructorMenu();
+                    break;
+                case "5":
+                    running = false;
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
     }
 
-    // Inheritance + overriding demo: Booking reference calling overridden getName()
-    Booking bookingFromEvent = event1;
-    System.out.println("Booking (Event): " + bookingFromEvent.getName());
+    private static void eventMenu() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n--- Event Management ---");
+            System.out.println("1. Add Event");
+            System.out.println("2. List Events (Count)");
+            System.out.println("3. Find Event by Name");
+            System.out.println("4. Remove Event");
+            System.out.println("5. Back to Main Menu");
+            System.out.print("Select an option: ");
 
-    manager.removeEvent(event1);
-    System.out.println("After remove, events count: " + manager.getEvents().size());
+            String choice = scanner.nextLine();
 
-
-    // -------------------- Schedule (Schedule + ScheduleManagement) --------------------
-    ScheduleManagement scheduleManagement = new ScheduleManagement();
-    scheduleManagement.createSchedule("CS101", "Dr. Noekhah", 12, "Mon 10:00");
-    scheduleManagement.createSchedule("ENG201", "Ms. Scheaffer", 5, "Wed 14:00");
-
-    Schedule scheduleFound = scheduleManagement.findSchedule("course", "CS101");
-    if (scheduleFound != null) {
-      System.out.println("Schedule found by course: " + scheduleFound.getCourse() + " | " + scheduleFound.getInstructor());
-
-      // Inheritance + overriding demo: Booking reference calling overridden getName()
-      Booking bookingFromSchedule = scheduleFound;
-      System.out.println("Booking (Schedule): " + bookingFromSchedule.getName());
-
-      scheduleManagement.updateSchedule("CS101", "Dr. Noekhah", 14, "Mon 11:00");
-      scheduleManagement.cancelSchedule(scheduleFound);
+            switch (choice) {
+                case "1":
+                    System.out.print("Enter name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter date: ");
+                    String date = scanner.nextLine();
+                    System.out.print("Enter location: ");
+                    String location = scanner.nextLine();
+                    System.out.print("Enter department: ");
+                    String dept = scanner.nextLine();
+                    System.out.print("Enter attendees count: ");
+                    int attendees = 0;
+                    try {
+                        attendees = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid number. Defaulting to 0.");
+                    }
+                    eventManager.addEvent(new Event(name, date, location, dept, attendees));
+                    System.out.println("Event added.");
+                    break;
+                case "2":
+                    System.out.println("Events count: " + eventManager.getEvents().size());
+                    break;
+                case "3":
+                    System.out.print("Enter event name to find: ");
+                    String searchName = scanner.nextLine();
+                    Event found = eventManager.getEventByName(searchName);
+                    if (found != null) {
+                        System.out.println("Found: " + found.getName() + " at " + found.getLocation() + ", " + found.getAttendees() + " attendees");
+                    } else {
+                        System.out.println("Event not found.");
+                    }
+                    break;
+                case "4":
+                    System.out.print("Enter event name to remove: ");
+                    String removeName = scanner.nextLine();
+                    Event toRemove = eventManager.getEventByName(removeName);
+                    if (toRemove != null) {
+                        eventManager.removeEvent(toRemove);
+                        System.out.println("Event removed.");
+                    } else {
+                        System.out.println("Event not found.");
+                    }
+                    break;
+                case "5":
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
     }
 
+    private static void scheduleMenu() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n--- Schedule Management ---");
+            System.out.println("1. Create Schedule");
+            System.out.println("2. Find Schedule (by course)");
+            System.out.println("3. Update Schedule");
+            System.out.println("4. Cancel Schedule");
+            System.out.println("5. Back to Main Menu");
+            System.out.print("Select an option: ");
 
-    // -------------------- Students (Student + StudentManagement) --------------------
-    StudentManagement sm = new StudentManagement();
+            String choice = scanner.nextLine();
 
-    Student s1 = new Student(1, "Khondamir", "Software Engineering");
-    Student s2 = new Student(2, "Bahodir", "Artificial Intelligence");
+            switch (choice) {
+                case "1":
+                    System.out.print("Enter course: ");
+                    String course = scanner.nextLine();
+                    System.out.print("Enter instructor: ");
+                    String instructor = scanner.nextLine();
+                    System.out.print("Enter weeks (int): ");
+                    int weeks = 1;
+                    try {
+                        weeks = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid number. Defaulting to 1.");
+                    }
+                    System.out.print("Enter time: ");
+                    String time = scanner.nextLine();
+                    scheduleManagement.createSchedule(course, instructor, weeks, time);
+                    System.out.println("Schedule created.");
+                    break;
+                case "2":
+                    System.out.print("Enter course to find: ");
+                    String findCourse = scanner.nextLine();
+                    Schedule found = scheduleManagement.findSchedule("course", findCourse);
+                    if (found != null) {
+                        System.out.println("Schedule found: " + found.getCourse() + " | " + found.getInstructor());
+                    } else {
+                        System.out.println("Schedule not found.");
+                    }
+                    break;
+                case "3":
+                    System.out.print("Enter course to update: ");
+                    String updateCourse = scanner.nextLine();
+                    System.out.print("Enter new instructor: ");
+                    String newInst = scanner.nextLine();
+                    System.out.print("Enter new weeks (int): ");
+                    int newWeeks = 1;
+                    try {
+                        newWeeks = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid number. Defaulting to 1.");
+                    }
+                    System.out.print("Enter new time: ");
+                    String newTime = scanner.nextLine();
+                    scheduleManagement.updateSchedule(updateCourse, newInst, newWeeks, newTime);
+                    break;
+                case "4":
+                    System.out.print("Enter course to cancel: ");
+                    String cancelCourse = scanner.nextLine();
+                    Schedule toCancel = scheduleManagement.findSchedule("course", cancelCourse);
+                    if (toCancel != null) {
+                        scheduleManagement.cancelSchedule(toCancel);
+                    } else {
+                        System.out.println("Schedule not found.");
+                    }
+                    break;
+                case "5":
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
 
-    sm.addStudent(s1);
-    sm.addStudent(s2);
+    private static void studentMenu() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n--- Student Management ---");
+            System.out.println("1. Add Student");
+            System.out.println("2. List Students");
+            System.out.println("3. Find Student (by major)");
+            System.out.println("4. Update Student");
+            System.out.println("5. Remove Student");
+            System.out.println("6. Back to Main Menu");
+            System.out.print("Select an option: ");
 
-    System.out.println("\n--- Students ---");
-    sm.listStudents();
+            String choice = scanner.nextLine();
 
-    // Interface demo: Student used as Person
-    Person pStudent = s1;
-    System.out.println(pStudent.getDescription());
+            switch (choice) {
+                case "1":
+                    System.out.print("Enter student ID (int): ");
+                    int id = 0;
+                    try {
+                        id = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID. Defaulting to 0.");
+                    }
+                    System.out.print("Enter name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter major: ");
+                    String major = scanner.nextLine();
+                    studentManagement.addStudent(new Student(id, name, major));
+                    System.out.println("Student added.");
+                    break;
+                case "2":
+                    studentManagement.listStudents();
+                    break;
+                case "3":
+                    System.out.print("Enter major to find: ");
+                    String findMajor = scanner.nextLine();
+                    studentManagement.findStudent(findMajor);
+                    break;
+                case "4":
+                    System.out.print("Enter student ID to update (int): ");
+                    int updateId = 0;
+                    try {
+                        updateId = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID. Defaulting to 0.");
+                    }
+                    System.out.print("Enter new name: ");
+                    String newName = scanner.nextLine();
+                    System.out.print("Enter new major: ");
+                    String newMajor = scanner.nextLine();
+                    studentManagement.updateStudent(updateId, newName, newMajor);
+                    break;
+                case "5":
+                    System.out.print("Enter student ID to remove (int): ");
+                    int removeId = 0;
+                    try {
+                        removeId = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID. Defaulting to 0.");
+                    }
+                    studentManagement.removeStudent(removeId);
+                    break;
+                case "6":
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
 
-    sm.updateStudent(1, "Viktoriya", "Cyber Security");
-    sm.findStudent("Cyber Security");
+    private static void instructorMenu() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n--- Instructor Management ---");
+            System.out.println("1. Add Instructor");
+            System.out.println("2. List Instructors");
+            System.out.println("3. Find Instructor");
+            System.out.println("4. Update Instructor");
+            System.out.println("5. Remove Instructor");
+            System.out.println("6. Back to Main Menu");
+            System.out.print("Select an option: ");
 
-    sm.removeStudent(2);
+            String choice = scanner.nextLine();
 
-    System.out.println("After remove:");
-    sm.listStudents();
-
-    // Instructor Management demo
-    System.out.println("\n--- Instructor Management ---");
-    InstructorManagement im = new InstructorManagement();
-
-    Instructor inst1 = new Instructor(101, "Dr. Shirin Noekhah", "Data Structures & Algorithms");
-    Instructor inst2 = new Instructor(102, "Ms. Ellie Scheaffer", "English Composition");
-
-    im.addInstructor(inst1);
-    im.addInstructor(inst2);
-
-    System.out.println("All instructors:");
-    im.listInstructors();
-
-    // Interface demo: Instructor used as Person
-    Person pInstructor = inst1;
-    System.out.println(pInstructor.getDescription());
-
-    // Overloading demo (compile-time polymorphism)
-    im.updateInstructor(101, "Dr. Shirin Noekhah", "Advanced Data Structures");
-    im.updateInstructor(101, "Dr. Shirin Noekhah"); // only name provided; department stays
-    im.updateInstructor(101); // no new values provided; leaves current values
-
-    System.out.println("\nFind by name 'Scheaffer':");
-    im.findInstructor("Scheaffer");
-    System.out.println("\nFind by department 'English Composition':");
-    im.findInstructor("English Composition");
-    System.out.println("\nFind by employee ID '102':");
-    im.findInstructor("102");
-
-    im.removeInstructor(102);
-    System.out.println("\nAfter remove, all instructors:");
-    im.listInstructors();
-  }
+            switch (choice) {
+                case "1":
+                    System.out.print("Enter employee ID (int): ");
+                    int id = 0;
+                    try {
+                        id = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID. Defaulting to 0.");
+                    }
+                    System.out.print("Enter name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter department: ");
+                    String dept = scanner.nextLine();
+                    instructorManagement.addInstructor(new Instructor(id, name, dept));
+                    System.out.println("Instructor added.");
+                    break;
+                case "2":
+                    instructorManagement.listInstructors();
+                    break;
+                case "3":
+                    System.out.print("Enter search term (name/dept/id): ");
+                    String term = scanner.nextLine();
+                    instructorManagement.findInstructor(term);
+                    break;
+                case "4":
+                    System.out.print("Enter employee ID to update (int): ");
+                    int updateId = 0;
+                    try {
+                        updateId = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID. Defaulting to 0.");
+                    }
+                    System.out.print("Enter new name: ");
+                    String newName = scanner.nextLine();
+                    System.out.print("Enter new department: ");
+                    String newDept = scanner.nextLine();
+                    instructorManagement.updateInstructor(updateId, newName, newDept);
+                    break;
+                case "5":
+                    System.out.print("Enter employee ID to remove (int): ");
+                    int removeId = 0;
+                    try {
+                        removeId = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID. Defaulting to 0.");
+                    }
+                    instructorManagement.removeInstructor(removeId);
+                    break;
+                case "6":
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
 }

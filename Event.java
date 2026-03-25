@@ -14,7 +14,7 @@ public class Event extends Booking {
 
     @Override
     public String getName() {
-        return "Booking name is: " + name;
+        return name;
     }
 
     public String getDate() {
