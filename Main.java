@@ -5,6 +5,7 @@ public class Main {
     private static ScheduleManagement scheduleManagement = new ScheduleManagement();
     private static StudentManagement studentManagement = new StudentManagement();
     private static InstructorManagement instructorManagement = new InstructorManagement();
+    private static CourseWaitlist courseWaitlist = new CourseWaitlist("General");
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -15,7 +16,8 @@ public class Main {
             System.out.println("2. Schedule Management");
             System.out.println("3. Student Management");
             System.out.println("4. Instructor Management");
-            System.out.println("5. Exit");
+            System.out.println("5. Course Waitlist");
+            System.out.println("6. Exit");
             System.out.print("Select an option: ");
 
             String choice = scanner.nextLine();
@@ -34,6 +36,9 @@ public class Main {
                     instructorMenu();
                     break;
                 case "5":
+                    waitlistMenu();
+                    break;
+                case "6":
                     running = false;
                     System.out.println("Exiting...");
                     break;
@@ -273,6 +278,70 @@ public class Main {
                     studentManagement.removeStudent(removeId);
                     break;
                 case "6":
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
+
+    private static void waitlistMenu() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n--- Course Waitlist (" + courseWaitlist.getCourseName() + ") ---");
+            System.out.println("1. Set Course Name");
+            System.out.println("2. Enqueue Student (Add to Waitlist)");
+            System.out.println("3. Dequeue Student (Register Next in Line)");
+            System.out.println("4. Peek (View Front of Waitlist)");
+            System.out.println("5. Check if Waitlist is Empty");
+            System.out.println("6. View Waitlist Size");
+            System.out.println("7. Back to Main Menu");
+            System.out.print("Select an option: ");
+
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    System.out.print("Enter course name: ");
+                    String courseName = scanner.nextLine();
+                    courseWaitlist = new CourseWaitlist(courseName);
+                    System.out.println("Waitlist created for: " + courseName);
+                    break;
+                case "2":
+                    System.out.print("Enter student ID (int): ");
+                    int sid = 0;
+                    try {
+                        sid = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID. Defaulting to 0.");
+                    }
+                    System.out.print("Enter student name: ");
+                    String sName = scanner.nextLine();
+                    System.out.print("Enter student major: ");
+                    String sMajor = scanner.nextLine();
+                    courseWaitlist.enqueue(new Student(sid, sName, sMajor));
+                    break;
+                case "3":
+                    courseWaitlist.dequeue();
+                    break;
+                case "4":
+                    Student front = courseWaitlist.peek();
+                    if (front != null) {
+                        System.out.println("Front of waitlist: " + front.getDescription());
+                    }
+                    break;
+                case "5":
+                    if (courseWaitlist.isEmpty()) {
+                        System.out.println("The waitlist is empty.");
+                    } else {
+                        System.out.println("The waitlist is NOT empty.");
+                    }
+                    break;
+                case "6":
+                    System.out.println("Students waiting: " + courseWaitlist.size());
+                    break;
+                case "7":
                     back = true;
                     break;
                 default:
