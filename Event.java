@@ -1,35 +1,16 @@
 public class Event extends Booking {
-    private String date;
-    private String location;
-    private String organizer;
-    private int attendees;
+    private String name;
 
     public Event(String name, String date, String location, String organizer, int attendees) {
-        super(name);
-        this.date = date;
-        this.location = location;
-        this.organizer = organizer;
-        this.attendees = attendees;
+        super(date, organizer, location, attendees);
+        this.name = name;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    public String getDate() {
-        return date;
-    }
-    
-    public String getLocation() {
-        return location;
-    }
-
     public String getOrganizer() {
-        return organizer;
-    }
-
-    public int getAttendees() {
-        return attendees;
+        return host;
     }
 }
