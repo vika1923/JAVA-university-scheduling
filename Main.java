@@ -117,7 +117,11 @@ public class Main {
             System.out.println("2. Find Schedule (by course)");
             System.out.println("3. Update Schedule");
             System.out.println("4. Cancel Schedule");
-            System.out.println("5. Back to Main Menu");
+            System.out.println("5. Undo Last Action");
+            System.out.println("6. Peek Last Action");
+            System.out.println("7. Check If Undo Stack Is Empty");
+            System.out.println("8. Undo Stack Size");
+            System.out.println("9. Back to Main Menu");
             System.out.print("Select an option: ");
 
             String choice = scanner.nextLine();
@@ -177,6 +181,27 @@ public class Main {
                     }
                     break;
                 case "5":
+                    scheduleManagement.undoLastAction();
+                    break;
+                case "6":
+                    ScheduleAction last = scheduleManagement.peekLastAction();
+                    if (last == null) {
+                        System.out.println("No actions on the stack.");
+                    } else {
+                        System.out.println("Last action: " + last.describe());
+                    }
+                    break;
+                case "7":
+                    if (scheduleManagement.isActionStackEmpty()) {
+                        System.out.println("Undo stack is empty. No undo available.");
+                    } else {
+                        System.out.println("Undo stack is NOT empty. Undo is available.");
+                    }
+                    break;
+                case "8":
+                    System.out.println("Undo stack size: " + scheduleManagement.undoCount());
+                    break;
+                case "9":
                     back = true;
                     break;
                 default:
