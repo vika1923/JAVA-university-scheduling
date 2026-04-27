@@ -1,4 +1,4 @@
-public class Instructor implements Person {
+public class Instructor extends Person {
 
     private int employeeId;
     private String name;
@@ -19,6 +19,7 @@ public class Instructor implements Person {
         return employeeId;
     }
 
+    @Override
     public String getName() {
         return name;
     }

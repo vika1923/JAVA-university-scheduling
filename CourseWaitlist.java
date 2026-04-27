@@ -14,13 +14,11 @@ public class CourseWaitlist {
         return courseName;
     }
 
-    // Adds a student to the back of the waitlist when the course is full
     public void enqueue(Student student) {
         waitlist.add(student);
         System.out.println(student.getName() + " has been added to the waitlist for " + courseName + ".");
     }
 
-    // Removes and registers the student at the front of the waitlist when a spot opens
     public Student dequeue() {
         if (waitlist.isEmpty()) {
             System.out.println("Waitlist for " + courseName + " is empty. No students to register.");
@@ -31,7 +29,6 @@ public class CourseWaitlist {
         return student;
     }
 
-    // Returns the student at the front of the waitlist without removing them
     public Student peek() {
         if (waitlist.isEmpty()) {
             System.out.println("Waitlist for " + courseName + " is empty.");
@@ -40,12 +37,10 @@ public class CourseWaitlist {
         return waitlist.peek();
     }
 
-    // Returns true if no students are waiting
     public boolean isEmpty() {
         return waitlist.isEmpty();
     }
 
-    // Returns how many students are currently waiting
     public int size() {
         return waitlist.size();
     }

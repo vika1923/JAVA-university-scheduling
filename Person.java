@@ -1,9 +1,9 @@
-public interface Person {
+public abstract class Person {
 
-    int getId();
-    String getName();
+    public abstract int getId();
+    public abstract String getName();
 
-    default String getDescription() {
+    public String getDescription() {
         return "Person: " + getId() + " | " + getName();
     }
 }

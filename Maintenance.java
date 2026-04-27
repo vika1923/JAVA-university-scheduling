@@ -1,4 +1,7 @@
-public class MaintenanceRequest {
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+class MaintenanceRequest {
     private String description;
     private boolean isUrgent;
 
@@ -15,11 +18,12 @@ public class MaintenanceRequest {
         return isUrgent;
     }
 }
-public class MaintenanceDeQueue{
+
+class MaintenanceDeQueue{
     private Deque<MaintenanceRequest> maintenanceRequests;
 
     public MaintenanceDeQueue() {
-        this.maintenanceRequests = new Deque<MaintenanceRequest>()
+        this.maintenanceRequests = new ArrayDeque<>();
     }
 
     public void addUrgent(MaintenanceRequest maintenanceRequest) {

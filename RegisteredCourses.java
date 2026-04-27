@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 class RegisteredCourses{
     private LinkedList<Course> courses;
 
@@ -25,7 +27,8 @@ class RegisteredCourses{
         return courses.size();
     }
 }
-public class Course{
+
+class Course{
     private int id;
     private String name;
     private String code;

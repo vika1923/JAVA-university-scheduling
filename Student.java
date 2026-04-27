@@ -1,4 +1,4 @@
-public class Student implements Person {
+public class Student extends Person {
 
     private int id;
     private String name;
@@ -10,10 +10,12 @@ public class Student implements Person {
         this.major = major;
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
