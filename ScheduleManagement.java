@@ -12,14 +12,14 @@ public class ScheduleManagement {
         this.actionStack = new Stack<>();
     }
 
-    public void createSchedule(String course, String instructor, int classroom, String time) {
+    public void createSchedule(String course, String instructor, Classroom classroom, String time) {
        Schedule newSchedule = new Schedule(course, instructor, classroom, time);
        schedules.add(newSchedule);
        actionStack.push(new ScheduleAction("CREATE", newSchedule));
        System.out.println("New schedule created: " + newSchedule.getCourse() + " at " + newSchedule.getClassroom() + ", " + newSchedule.getTime());
     }
 
-    public void updateSchedule(String course, String instructor, int classroom, String time) {
+    public void updateSchedule(String course, String instructor, Classroom classroom, String time) {
         Schedule found = findSchedule("course", course);
         if (found != null) {
             actionStack.push(new ScheduleAction("UPDATE", found));
@@ -51,12 +51,7 @@ public class ScheduleManagement {
         } else if (field.equals("instructor")) {
             return schedules.stream().filter(schedule -> schedule.getInstructor().equals(name)).findFirst().orElse(null);
         } else if (field.equals("classroom")) {
-            try {
-                int classRoomNo = Integer.parseInt(name);
-                return schedules.stream().filter(schedule -> schedule.getClassroom() == classRoomNo).findFirst().orElse(null);
-            } catch (NumberFormatException e) {
-                return null;
-            }
+            return schedules.stream().filter(schedule -> schedule.getClassroom().getRoomNumber().equals(name)).findFirst().orElse(null);
         } else if (field.equals("time")) {
             return schedules.stream().filter(schedule -> schedule.getTime().equals(name)).findFirst().orElse(null);
         }

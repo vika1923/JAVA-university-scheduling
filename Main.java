@@ -6,6 +6,8 @@ public class Main {
     private static StudentManagement studentManagement = new StudentManagement();
     private static InstructorManagement instructorManagement = new InstructorManagement();
     private static CourseWaitlist courseWaitlist = new CourseWaitlist("General");
+    private static CourseManagement courseManagement = new CourseManagement();
+    private static ClassroomManagement classroomManagement = new ClassroomManagement();
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -17,7 +19,9 @@ public class Main {
             System.out.println("3. Student Management");
             System.out.println("4. Instructor Management");
             System.out.println("5. Course Waitlist");
-            System.out.println("6. Exit");
+            System.out.println("6. Course Management");
+            System.out.println("7. Classroom Management");
+            System.out.println("8. Exit");
             System.out.print("Select an option: ");
 
             String choice = scanner.nextLine();
@@ -39,6 +43,12 @@ public class Main {
                     waitlistMenu();
                     break;
                 case "6":
+                    courseMenu();
+                    break;
+                case "7":
+                    classroomMenu();
+                    break;
+                case "8":
                     running = false;
                     System.out.println("Exiting...");
                     break;
@@ -137,16 +147,12 @@ public class Main {
                     String course = scanner.nextLine();
                     System.out.print("Enter instructor: ");
                     String instructor = scanner.nextLine();
-                    System.out.print("Enter weeks (int): ");
-                    int weeks = 1;
-                    try {
-                        weeks = Integer.parseInt(scanner.nextLine());
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid number. Defaulting to 1.");
-                    }
+                    System.out.print("Enter classroom room number: ");
+                    String roomNo = scanner.nextLine();
+                    Classroom classroom = new Classroom(roomNo, "Unknown", 0, false);
                     System.out.print("Enter time: ");
                     String time = scanner.nextLine();
-                    scheduleManagement.createSchedule(course, instructor, weeks, time);
+                    scheduleManagement.createSchedule(course, instructor, classroom, time);
                     System.out.println("Schedule created.");
                     break;
                 case "2":
@@ -164,16 +170,12 @@ public class Main {
                     String updateCourse = scanner.nextLine();
                     System.out.print("Enter new instructor: ");
                     String newInst = scanner.nextLine();
-                    System.out.print("Enter new weeks (int): ");
-                    int newWeeks = 1;
-                    try {
-                        newWeeks = Integer.parseInt(scanner.nextLine());
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid number. Defaulting to 1.");
-                    }
+                    System.out.print("Enter new classroom room number: ");
+                    String newRoomNo = scanner.nextLine();
+                    Classroom newClassroom = new Classroom(newRoomNo, "Unknown", 0, false);
                     System.out.print("Enter new time: ");
                     String newTime = scanner.nextLine();
-                    scheduleManagement.updateSchedule(updateCourse, newInst, newWeeks, newTime);
+                    scheduleManagement.updateSchedule(updateCourse, newInst, newClassroom, newTime);
                     break;
                 case "4":
                     System.out.print("Enter course to cancel: ");
@@ -411,6 +413,160 @@ public class Main {
                         System.out.println("Invalid ID. Defaulting to 0.");
                     }
                     instructorManagement.removeInstructor(removeId);
+                    break;
+                case "6":
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
+
+    private static void courseMenu() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n--- Course Management ---");
+            System.out.println("1. Add Course");
+            System.out.println("2. List Courses");
+            System.out.println("3. Find Course");
+            System.out.println("4. Update Course");
+            System.out.println("5. Remove Course");
+            System.out.println("6. Back to Main Menu");
+            System.out.print("Select an option: ");
+
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    System.out.print("Enter course ID (int): ");
+                    int id = 0;
+                    try {
+                        id = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID. Defaulting to 0.");
+                    }
+                    System.out.print("Enter name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter code: ");
+                    String code = scanner.nextLine();
+                    System.out.print("Enter department: ");
+                    String dept = scanner.nextLine();
+                    courseManagement.addCourse(new Course(id, name, code, dept));
+                    break;
+                case "2":
+                    for (Course c : courseManagement.getAllCourses()) {
+                        System.out.println("ID: " + c.getId() + " | Name: " + c.getName() + " | Code: " + c.getCode() + " | Dept: " + c.getDepartment());
+                    }
+                    break;
+                case "3":
+                    System.out.print("Enter search term (name/code/dept): ");
+                    String term = scanner.nextLine();
+                    for (Course c : courseManagement.findCourse(term)) {
+                        System.out.println("Found: " + c.getName() + " (" + c.getCode() + ")");
+                    }
+                    break;
+                case "4":
+                    System.out.print("Enter course ID to update (int): ");
+                    int updateId = 0;
+                    try {
+                        updateId = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID. Defaulting to 0.");
+                    }
+                    System.out.print("Enter new name: ");
+                    String newName = scanner.nextLine();
+                    System.out.print("Enter new code: ");
+                    String newCode = scanner.nextLine();
+                    System.out.print("Enter new department: ");
+                    String newDept = scanner.nextLine();
+                    courseManagement.updateCourse(updateId, newName, newCode, newDept);
+                    break;
+                case "5":
+                    System.out.print("Enter course ID to remove (int): ");
+                    int removeId = 0;
+                    try {
+                        removeId = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid ID. Defaulting to 0.");
+                    }
+                    courseManagement.removeCourse(removeId);
+                    break;
+                case "6":
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
+
+    private static void classroomMenu() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n--- Classroom Management ---");
+            System.out.println("1. Add Classroom");
+            System.out.println("2. List Classrooms");
+            System.out.println("3. Find Classroom");
+            System.out.println("4. Update Classroom");
+            System.out.println("5. Remove Classroom");
+            System.out.println("6. Back to Main Menu");
+            System.out.print("Select an option: ");
+
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    System.out.print("Enter room number: ");
+                    String roomNo = scanner.nextLine();
+                    System.out.print("Enter building: ");
+                    String bldg = scanner.nextLine();
+                    System.out.print("Enter capacity (int): ");
+                    int cap = 0;
+                    try {
+                        cap = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid capacity. Defaulting to 0.");
+                    }
+                    System.out.print("Has projector (true/false): ");
+                    boolean proj = Boolean.parseBoolean(scanner.nextLine());
+                    classroomManagement.addClassroom(new Classroom(roomNo, bldg, cap, proj));
+                    break;
+                case "2":
+                    for (Classroom c : classroomManagement.getAllClassrooms()) {
+                        System.out.println("Room: " + c.getRoomNumber() + " | Bldg: " + c.getBuilding() + " | Cap: " + c.getCapacity() + " | Projector: " + c.hasProjector());
+                    }
+                    break;
+                case "3":
+                    System.out.print("Enter search term (room/building/capacity): ");
+                    String term = scanner.nextLine();
+                    for (Classroom c : classroomManagement.findClassroom(term)) {
+                        System.out.println("Found: " + c.getRoomNumber() + " in " + c.getBuilding());
+                    }
+                    break;
+                case "4":
+                    System.out.print("Enter room number to update: ");
+                    String updateRoom = scanner.nextLine();
+                    System.out.print("Enter new room number (or empty to skip): ");
+                    String newRoom = scanner.nextLine();
+                    System.out.print("Enter new building (or empty to skip): ");
+                    String newBldg = scanner.nextLine();
+                    System.out.print("Enter new capacity (or empty to skip): ");
+                    String newCapStr = scanner.nextLine();
+                    Integer newCap = null;
+                    if (!newCapStr.isEmpty()) {
+                        try {
+                            newCap = Integer.parseInt(newCapStr);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid capacity. Skipping capacity update.");
+                        }
+                    }
+                    classroomManagement.updateClassroom(updateRoom, newRoom, newBldg, newCap);
+                    break;
+                case "5":
+                    System.out.print("Enter room number to remove: ");
+                    String removeRoom = scanner.nextLine();
+                    classroomManagement.removeClassroom(removeRoom);
                     break;
                 case "6":
                     back = true;

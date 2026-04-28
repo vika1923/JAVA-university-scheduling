@@ -6,7 +6,7 @@ public class ScheduleAction {
 
     private String oldCourse;
     private String oldInstructor;
-    private int oldClassroom;
+    private Classroom oldClassroom;
     private String oldTime;
 
     public ScheduleAction(String type, Schedule schedule) {
@@ -23,7 +23,7 @@ public class ScheduleAction {
 
     public String getOldCourse() { return oldCourse; }
     public String getOldInstructor() { return oldInstructor; }
-    public int getOldClassroom() { return oldClassroom; }
+    public Classroom getOldClassroom() { return oldClassroom; }
     public String getOldTime() { return oldTime; }
 
     public String describe() {
