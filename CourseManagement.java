@@ -1,12 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CourseManagement {
     private List<Course> courses;
 
     public CourseManagement() {
-        this.courses = new ArrayList<>();
+        this.courses = new ArrayList<Course>();
     }
 
     public void addCourse(Course course) {
@@ -15,7 +14,8 @@ public class CourseManagement {
     }
 
     public void updateCourse(int id, String newName, String newCode, String newDepartment) {
-        for (Course course : courses) {
+        for (int i = 0; i < courses.size(); i++) {
+            Course course = courses.get(i);
             if (course.getId() == id) {
                 if (newName != null && !newName.isEmpty()) course.setName(newName);
                 if (newCode != null && !newCode.isEmpty()) course.setCode(newCode);
@@ -28,8 +28,14 @@ public class CourseManagement {
     }
 
     public void removeCourse(int id) {
-        courses.removeIf(course -> course.getId() == id);
-        System.out.println("Course removed.");
+        for (int i = 0; i < courses.size(); i++) {
+            if (courses.get(i).getId() == id) {
+                courses.remove(i);
+                System.out.println("Course removed.");
+                return;
+            }
+        }
+        System.out.println("Course not found.");
     }
 
     public List<Course> getAllCourses() {
@@ -37,10 +43,15 @@ public class CourseManagement {
     }
 
     public List<Course> findCourse(String keyword) {
-        return courses.stream()
-                .filter(c -> c.getName().equalsIgnoreCase(keyword) || 
-                             c.getCode().equalsIgnoreCase(keyword) || 
-                             c.getDepartment().equalsIgnoreCase(keyword))
-                .collect(Collectors.toList());
+        List<Course> result = new ArrayList<Course>();
+        for (int i = 0; i < courses.size(); i++) {
+            Course c = courses.get(i);
+            if (c.getName().equalsIgnoreCase(keyword) ||
+                c.getCode().equalsIgnoreCase(keyword) ||
+                c.getDepartment().equalsIgnoreCase(keyword)) {
+                result.add(c);
+            }
+        }
+        return result;
     }
 }

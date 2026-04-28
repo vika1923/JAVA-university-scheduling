@@ -5,7 +5,7 @@ public class EventManager {
     private List<Event> events;
 
     public EventManager() {
-        this.events = new ArrayList<>();
+        this.events = new ArrayList<Event>();
     }
 
     public void addEvent(Event event) {
@@ -15,24 +15,47 @@ public class EventManager {
     public void removeEvent(Event event) {
         events.remove(event);
     }
-    
+
     public List<Event> getEvents() {
         return events;
     }
-    
+
     public Event getEventByName(String name) {
-        return events.stream().filter(event -> event.getName().equals(name)).findFirst().orElse(null);
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i).getName().equals(name)) {
+                return events.get(i);
+            }
+        }
+        return null;
     }
 
     public List<Event> getEventByDate(String date) {
-        return events.stream().filter(event -> event.getDate().equals(date)).collect(java.util.stream.Collectors.toList());
+        List<Event> result = new ArrayList<Event>();
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i).getDate().equals(date)) {
+                result.add(events.get(i));
+            }
+        }
+        return result;
     }
 
     public List<Event> getEventByLocation(String location) {
-        return events.stream().filter(event -> event.getLocation().equals(location)).collect(java.util.stream.Collectors.toList());
+        List<Event> result = new ArrayList<Event>();
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i).getLocation().equals(location)) {
+                result.add(events.get(i));
+            }
+        }
+        return result;
     }
 
     public List<Event> getEventByOrganizer(String organizer) {
-        return events.stream().filter(event -> event.getOrganizer().equals(organizer)).collect(java.util.stream.Collectors.toList());
+        List<Event> result = new ArrayList<Event>();
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i).getOrganizer().equals(organizer)) {
+                result.add(events.get(i));
+            }
+        }
+        return result;
     }
 }

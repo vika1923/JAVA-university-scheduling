@@ -1,12 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ClassroomManagement {
     private List<Classroom> classrooms;
 
     public ClassroomManagement() {
-        this.classrooms = new ArrayList<>();
+        this.classrooms = new ArrayList<Classroom>();
     }
 
     public void addClassroom(Classroom classroom) {
@@ -15,7 +14,8 @@ public class ClassroomManagement {
     }
 
     public void updateClassroom(String oldRoomNumber, String newRoomNumber, String newBuilding, Integer newCapacity) {
-        for (Classroom c : classrooms) {
+        for (int i = 0; i < classrooms.size(); i++) {
+            Classroom c = classrooms.get(i);
             if (c.getRoomNumber().equals(oldRoomNumber)) {
                 if (newRoomNumber != null && !newRoomNumber.isEmpty()) c.setRoomNumber(newRoomNumber);
                 if (newBuilding != null && !newBuilding.isEmpty()) c.setBuilding(newBuilding);
@@ -28,8 +28,14 @@ public class ClassroomManagement {
     }
 
     public void removeClassroom(String roomNumber) {
-        classrooms.removeIf(c -> c.getRoomNumber().equals(roomNumber));
-        System.out.println("Classroom removed.");
+        for (int i = 0; i < classrooms.size(); i++) {
+            if (classrooms.get(i).getRoomNumber().equals(roomNumber)) {
+                classrooms.remove(i);
+                System.out.println("Classroom removed.");
+                return;
+            }
+        }
+        System.out.println("Classroom not found.");
     }
 
     public List<Classroom> getAllClassrooms() {
@@ -37,10 +43,15 @@ public class ClassroomManagement {
     }
 
     public List<Classroom> findClassroom(String keyword) {
-        return classrooms.stream()
-                .filter(c -> c.getRoomNumber().equalsIgnoreCase(keyword) || 
-                             c.getBuilding().equalsIgnoreCase(keyword) || 
-                             String.valueOf(c.getCapacity()).equals(keyword))
-                .collect(Collectors.toList());
+        List<Classroom> result = new ArrayList<Classroom>();
+        for (int i = 0; i < classrooms.size(); i++) {
+            Classroom c = classrooms.get(i);
+            if (c.getRoomNumber().equalsIgnoreCase(keyword) ||
+                c.getBuilding().equalsIgnoreCase(keyword) ||
+                String.valueOf(c.getCapacity()).equals(keyword)) {
+                result.add(c);
+            }
+        }
+        return result;
     }
 }

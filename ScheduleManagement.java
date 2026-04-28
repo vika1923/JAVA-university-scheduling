@@ -8,8 +8,8 @@ public class ScheduleManagement {
     private Stack<ScheduleAction> actionStack;
 
     public ScheduleManagement() {
-        this.schedules = new ArrayList<>();
-        this.actionStack = new Stack<>();
+        this.schedules = new ArrayList<Schedule>();
+        this.actionStack = new Stack<ScheduleAction>();
     }
 
     public void createSchedule(String course, String instructor, Classroom classroom, String time) {
@@ -46,14 +46,17 @@ public class ScheduleManagement {
     }
 
     public Schedule findSchedule(String field, String name) {
-        if (field.equals("course")) {
-            return schedules.stream().filter(schedule -> schedule.getCourse().equals(name)).findFirst().orElse(null);
-        } else if (field.equals("instructor")) {
-            return schedules.stream().filter(schedule -> schedule.getInstructor().equals(name)).findFirst().orElse(null);
-        } else if (field.equals("classroom")) {
-            return schedules.stream().filter(schedule -> schedule.getClassroom().getRoomNumber().equals(name)).findFirst().orElse(null);
-        } else if (field.equals("time")) {
-            return schedules.stream().filter(schedule -> schedule.getTime().equals(name)).findFirst().orElse(null);
+        for (int i = 0; i < schedules.size(); i++) {
+            Schedule s = schedules.get(i);
+            if (field.equals("course") && s.getCourse().equals(name)) {
+                return s;
+            } else if (field.equals("instructor") && s.getInstructor().equals(name)) {
+                return s;
+            } else if (field.equals("classroom") && s.getClassroom().getRoomNumber().equals(name)) {
+                return s;
+            } else if (field.equals("time") && s.getTime().equals(name)) {
+                return s;
+            }
         }
         return null;
     }
