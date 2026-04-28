@@ -1,6 +1,6 @@
 import java.util.LinkedList;
 
-class RegisteredCourses{
+public class RegisteredCourses{
     private LinkedList<Course> courses;
 
     public RegisteredCourses() {
@@ -25,35 +25,5 @@ class RegisteredCourses{
 
     public int size() {
         return courses.size();
-    }
-}
-
-class Course{
-    private int id;
-    private String name;
-    private String code;
-    private String department;
-
-    public Course(int id, String name, String code, String department) {
-        this.id = id;
-        this.name = name;
-        this.code = code;
-        this.department = department;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getDepartment() {
-        return department;
     }
 }

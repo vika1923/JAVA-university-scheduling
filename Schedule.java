@@ -1,11 +1,12 @@
 class Schedule extends Booking implements GetItems, SetItems {
     private String course;
-    private int classroom;
+    private String instructor;
+    private Classroom classroom;
     private String time;
     private String semester;
     
-    public Schedule(String course, String instructor, int classroom, String time) {
-        super(time, instructor, String.valueOf(classroom), 0);
+    public Schedule(String course, String instructor, Classroom classroom, String time) {
+        super(course);
         this.course = course;
         this.classroom = classroom;
         this.time = time;
@@ -18,11 +19,8 @@ class Schedule extends Booking implements GetItems, SetItems {
     public String getInstructor() { return host; }
     public void setInstructor(String instructor) { this.host = instructor; }
 
-    public int getClassroom() { return classroom; }
-    public void setClassroom(int classroom) {
-        this.classroom = classroom;
-        this.location = String.valueOf(classroom);
-    }
+    public Classroom getClassroom() { return classroom; }
+    public void setClassroom(Classroom classroom) { this.classroom = classroom; }
 
     public String getTime() { return time; }
     public void setTime(String time) {

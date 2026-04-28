@@ -1,6 +1,6 @@
-interface GetItems {
-    public String getCourse();
-    public String getInstructor();
-    public int getClassroom();
-    public String getTime();
+public interface GetItems {
+    String getCourse();
+    String getInstructor();
+    Classroom getClassroom();
+    String getTime();
 }

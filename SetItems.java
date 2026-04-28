@@ -1,6 +1,6 @@
-interface SetItems{
-    public void setCourse(String course);
-    public void setInstructor(String instructor);
-    public void setClassroom(int classroom);
-    public void setTime(String time);
+interface SetItems {
+    void setCourse(String course);
+    void setInstructor(String instructor);
+    void setClassroom(Classroom classroom);
+    void setTime(String time);
 }
