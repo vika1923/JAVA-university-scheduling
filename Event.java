@@ -10,7 +10,8 @@ public class Event extends Booking {
         return name;
     }
 
-    public String getOrganizer() {
-        return host;
+    @Override
+    public String getHost() {
+        return "Event organizer is: " + host;
     }
 }

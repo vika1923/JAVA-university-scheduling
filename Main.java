@@ -152,7 +152,9 @@ public class Main {
                     Classroom classroom = new Classroom(roomNo, "Unknown", 0, false);
                     System.out.print("Enter time: ");
                     String time = scanner.nextLine();
-                    scheduleManagement.createSchedule(course, instructor, classroom, time);
+                    System.out.print("Enter semester: ");
+                    String semester = scanner.nextLine();
+                    scheduleManagement.createSchedule(course, instructor, classroom, time, semester);
                     System.out.println("Schedule created.");
                     break;
                 case "2":

@@ -52,7 +52,7 @@ public class EventManager {
     public List<Event> getEventByOrganizer(String organizer) {
         List<Event> result = new ArrayList<Event>();
         for (int i = 0; i < events.size(); i++) {
-            if (events.get(i).getOrganizer().equals(organizer)) {
+            if (events.get(i).getHost().equals(organizer)) {
                 result.add(events.get(i));
             }
         }

@@ -12,8 +12,8 @@ public class ScheduleManagement {
         this.actionStack = new Stack<ScheduleAction>();
     }
 
-    public void createSchedule(String course, String instructor, Classroom classroom, String time) {
-       Schedule newSchedule = new Schedule(course, instructor, classroom, time);
+    public void createSchedule(String course, String instructor, Classroom classroom, String time, String semester) {
+       Schedule newSchedule = new Schedule(course, instructor, classroom, time, semester);
        schedules.add(newSchedule);
        actionStack.push(new ScheduleAction("CREATE", newSchedule));
        System.out.println("New schedule created: " + newSchedule.getCourse() + " at " + newSchedule.getClassroom() + ", " + newSchedule.getTime());

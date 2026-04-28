@@ -3,11 +3,11 @@ class Schedule extends Booking implements GetItems, SetItems {
     private Classroom classroom;
     private String semester;
     
-    public Schedule(String course, String instructor, Classroom classroom, String time) {
+    public Schedule(String course, String instructor, Classroom classroom, String time, String semester) {
         super(time, instructor, classroom != null ? classroom.getRoomNumber() : "", 0);
         this.course = course;
         this.classroom = classroom;
-        this.semester = "";
+        this.semester = semester;
     }
 
     public String getCourse() { return course; }
